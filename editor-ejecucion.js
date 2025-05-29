@@ -190,9 +190,4 @@ runButtons.forEach(button => {
     });
 });
 
-document.querySelector('.submit-button').addEventListener('click', (e) => {
-    e.preventDefault();
-    alert('Las respuestas serían enviadas aquí. (Funcionalidad no implementada)');
-});
-
 createWorker();
