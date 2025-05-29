@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario Interactivo - Editor Avanzado</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/dracula.min.css">
+    <link rel="stylesheet" href="estilos.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/matchbrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closebrackets.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+</head>
+<body>
+    <div id="top-bar" style="display: flex; justify-content: flex-end; align-items: center; gap: 10px; font-weight: bold; margin-bottom: 20px; color: var(--primary-color);">
+        <div id="cronometro" style="font-size: 1.2em;">Tiempo Restante: 1:00:00</div>
+        <button id="btn-reiniciar" style="padding: 6px 12px; font-size: 1em; cursor: pointer;">🔄 Reiniciar</button>
+    </div>
+    <div class="container">
+        <h1>Prueba Técnica 🚀</h1>
+        <div id="pyodide-status">⚙️ Inicializando Entorno Python (Worker)... Por favor espera.</div>
+
+        <div class="parte">
+            <h2>🧩 PARTE 1: Lógica de Programación</h2>
+
+            <div class="pregunta">
+                <h3>1.1 Corrige esta función para que no sea un bucle infinito:</h3>
+                <div class="descripcion">Un bucle infinito es un ciclo que nunca termina porque su condición de finalización no 
+cambia o siempre es verdadera. Puede hacer que el programa se congele o consuma muchos 
+recursos.</div>
+                <div class="code-editor-area">
+                    <textarea id="code-1-1" spellcheck="false">contador = 0
+while contador < 5:
+    print(contador)
+    # Escribe aquí el código que falta</textarea>
+                    <button class="run-button" data-code-id="code-1-1">▶️ Ejecutar</button>
+                </div>
+                <div id="output-1-1" class="output-box">Salida aparecerá aquí...</div>
+            </div>
+
+            <div class="pregunta">
+                <h3>1.2 Crea una función llamada es_palindromo(palabra: str) que reciba un string texto y devuelva True si es un palíndromo, o False en caso contrario.<br>
+                    Puedes utilizar cualquier función o método disponible en Python, como inversión de cadenas ([::-1]), .lower(), .replace(), etc.</h3>
+                <div class="descripcion">Define la función `es_palindromo`. No uses `[::-1]`.</div>
+                <div class="code-editor-area">
+                    <textarea id="code-1-2" spellcheck="false">def es_palindromo(palabra: str) -> bool:
+    # Tu código aquí
+    pass
+
+# --- Pruebas (No modificar) ---
+print(f"'oso' es palíndromo: {es_palindromo('oso')}")
+print(f"'casa' es palíndromo: {es_palindromo('casa')}")
+print(f"'Ana' es palíndromo: {es_palindromo('Ana')}")
+print(f"'Luz azul' es palíndromo: {es_palindromo('Luz azul')}")</textarea>
+                    <button class="run-button" data-code-id="code-1-2">▶️ Ejecutar</button>
+                </div>
+                <div id="output-1-2" class="output-box">Salida aparecerá aquí...</div>
+            </div>
+
+            <div class="pregunta">
+                <h3>1.3 Crea una función en Python que reciba una lista de números enteros y retorne una nueva lista que contenga solo los números pares.</h3>
+                <div class="descripcion">Un número par es aquel que al dividirse entre 2 no deja residuo (es decir, n % 2 == 0).<br>
+La función debe recorrer la lista y filtrar todos los números que cumplan con esta condición.<br>
+Puedes usar cualquier estructura o función de Python que consideres útil.</div>
+                <div class="code-editor-area">
+                    <textarea id="code-1-3" spellcheck="false">def filtrar_pares(lista: list[int]) -> list[int]:
+    # Tu código aquí
+    pass
+
+# --- Pruebas (No modificar) ---
+numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+print(f"Pares en {numeros}: {filtrar_pares(numeros)}")</textarea>
+                    <button class="run-button" data-code-id="code-1-3">▶️ Ejecutar</button>
+                </div>
+                <div id="output-1-3" class="output-box">Salida aparecerá aquí...</div>
+            </div>
+
+        </div>
+
+        <div class="parte">
+            <h2>🛠 PARTE 2: Corrección de Errores</h2>
+
+            <div class="pregunta">
+                <h3>2.1 Corrige la función contar_vocales para que también cuente vocales acentuadas (á, é, í, ó, ú).<br>
+Asegúrate de que funcione correctamente al usarla con la palabra "Universo".</h3>
+                <div class="descripcion">Actualmente, la función solo cuenta las vocales sin tilde: a, e, i, o, u.<br>
+Sin embargo, en español también usamos vocales acentuadas (á, é, í, ó, ú), que deben ser consideradas como vocales válidas.<br>
+Modifica el código para incluir estas vocales y prueba que funcione con la palabra "Universo", la cual no tiene vocales acentuadas, por lo que debería retornar 4.</div>
+                <div class="code-editor-area">
+                    <textarea id="code-2-1" spellcheck="false">    
+def contar_vocales(palabra):
+    contador = 0
+    for letra in palabra:
+        if letra in ['a', 'e', 'i', 'o', 'u']:
+            contador += 1
+    return contador
+
+# --- Pruebas (No modificar) ---
+print(f"'Universo': {contar_vocales('Universo')}")
+print(f"'Programación': {contar_vocales('Programación')}")</textarea>
+                    <button class="run-button" data-code-id="code-2-1">▶️ Ejecutar</button>
+                </div>
+                <div id="output-2-1" class="output-box">Salida aparecerá aquí...</div>
+            </div>
+
+            <div class="pregunta">
+                <h3>2.2 El siguiente código imprime el nombre de cada persona de una lista, pero está mal estructurado porque repite instrucciones de forma innecesaria.<br>
+                     Refactóralo para que use un bucle for o while y haga lo mismo de forma más clara y eficiente.</h3>
+                <div class="descripcion">Actualmente, la función asume que el valor máximo inicial es 0. Esto provoca un error lógico cuando todos 
+                    los elementos de la lista son negativos, ya que 0 no está en la lista y se devuelve incorrectamente como máximo.<br>
+Debes modificar el código para que funcione con listas que contienen solo números negativos, positivos o una combinación de ambos.</div>
+                <div class="code-editor-area">
+                    <textarea id="code-2-2" spellcheck="false">def maximo(lista):
+    max = 0
+    for num in lista:
+        if num > max:
+            max = num
+    return max
+
+# --- Pruebas (No modificar) ---
+print(f"[1, 5, 2]: {maximo([1, 5, 2])}")
+print(f"[-1, -5, -2]: {maximo([-1, -5, -2])}")</textarea>
+                    <button class="run-button" data-code-id="code-2-2">▶️ Ejecutar</button>
+                </div>
+                <div id="output-2-2" class="output-box">Salida aparecerá aquí...</div>
+            </div>
+        </div>
+        
+        <div class="parte">
+            <h2>🔁 PARTE 3: Refactorización</h2>
+            <div class="pregunta">
+                <h3>3.1 Tienes una función que imprime todos los números pares de una lista y luego cuenta cuántos pares hay.<br>
+Tu tarea es reescribir esta función para que realice ambas tareas de forma más eficiente y clara, usando un solo recorrido de la lista.</h3>
+                <div class="descripcion">Actualmente, la función realiza dos procesos separados para imprimir y contar los números pares.<br>
+                     Optimiza el código para que ambas tareas se ejecuten en un solo paso, sin alterar el resultado final.</div>
+                <div class="code-editor-area">
+                    <textarea id="code-3-1" spellcheck="false">def imprimir_y_contar_pares(numeros):
+    contador = 0
+    for n in numeros:
+        if n % 2 == 0:
+            print(n)
+    
+    for n in numeros:
+        if n % 2 == 0:
+            contador += 1
+
+    return contador
+
+# --- Pruebas (No modificar) ---
+print("Prueba 1: [1, 2, 3, 4, 5]")
+imprimir_y_contar_pares([1, 2, 3, 4, 5])
+print("Prueba 2: [1, 3, 5, 7]")
+imprimir_y_contar_pares([1, 3, 5, 7])
+print("Prueba 3: [2, 4, 8, 10]")
+imprimir_y_contar_pares([2, 4, 8, 10])</textarea>
+                    <button class="run-button" data-code-id="code-3-1">▶️ Ejecutar</button>
+                </div>
+                <div id="output-3-1" class="output-box">Salida aparecerá aquí...</div>
+            </div>
+        </div>
+    <div class="parte">
+        <h2>🗄 PARTE 4: Bases de Datos (15 minutos)</h2>
+        <div class="pregunta">
+            <h3>4.1 Preguntas abiertas</h3>
+            <p>- ¿Qué es una base de datos y para qué sirve?</p>
+            <textarea class="text-input" placeholder="Tu respuesta aquí..."></textarea>
+            <p>- ¿Qué es una tabla y cómo se relaciona con una base de datos?</p>
+            <textarea class="text-input" placeholder="Tu respuesta aquí..."></textarea>
+            <p>- Menciona y explica brevemente 3 métodos comunes para interactuar con bases de datos en Python.</p>
+            <textarea class="text-input" placeholder="Tu respuesta aquí..."></textarea>
+        </div>
+        <div class="pregunta">
+            <h3>4.2 Librerías comunes en Python</h3>
+            <p>Escribe qué hace cada una:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Librería</th>
+                        <th>¿Qué hace?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>pymysql</td>
+                        <td><input type="text" style="width: 98%;"></td>
+                    </tr>
+                    <tr>
+                        <td>pandas</td>
+                        <td><input type="text" style="width: 98%;"></td>
+                    </tr>
+                    <tr>
+                        <td>numpy</td>
+                        <td><input type="text" style="width: 98%;"></td>
+                    </tr>
+                    <tr>
+                        <td>cv2</td>
+                        <td><input type="text" style="width: 98%;"></td>
+                    </tr>
+                    <tr>
+                        <td>tkinter</td>
+                        <td><input type="text" style="width: 98%;"></td>
+                    </tr>
+                    <tr>
+                        <td>requests</td>
+                        <td><input type="text" style="width: 98%;"></td>
+                    </tr>
+                     <tr>
+                        <td>selenium</td>
+                        <td><input type="text" style="width: 98%;"></td>
+                    </tr>
+                     <tr>
+                        <td>time</td>
+                        <td><input type="text" style="width: 98%;"></td>
+                    </tr>
+                     <tr>
+                        <td>PIL (Pillow)</td>
+                        <td><input type="text" style="width: 98%;"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="parte">
+        <h2>❓ PARTE 5: Opción Múltiple (15 preguntas)</h2>
+        <p>Marca una o varias respuestas correctas.</p>
+        <div class="pregunta opcion-multiple">
+            <p>1. ¿Cuál sentencia elimina filas de una tabla?</p>
+            <label><input type="checkbox" name="q1" value="a"> a) SELECT</label>
+            <label><input type="checkbox" name="q1" value="b"> b) DELETE</label>
+            <label><input type="checkbox" name="q1" value="c"> c) INSERT</label>
+            <label><input type="checkbox" name="q1" value="d"> d) DROP</label>
+        </div>
+        <div class="pregunta opcion-multiple">
+            <p>2. ¿Cuál es el propósito de una clave primaria?</p>
+            <label><input type="checkbox" name="q2" value="a"> a) Identificar unívocamente cada fila</label>
+            <label><input type="checkbox" name="q2" value="b"> b) Almacenar contraseñas</label>
+            <label><input type="checkbox" name="q2" value="c"> c) Definir el orden</label>
+            <label><input type="checkbox" name="q2" value="d"> d) Ninguna</label>
+        </div>
+         <div class="pregunta opcion-multiple">
+            <p>3. ¿Cuál librería se usa para trabajar con imágenes en Python?</p>
+            <label><input type="checkbox" name="q3" value="a"> a) cv2</label>
+            <label><input type="checkbox" name="q3" value="b"> b) psycopg2</label>
+            <label><input type="checkbox" name="q3" value="c"> c) sqlite3</label>
+            <label><input type="checkbox" name="q3" value="d"> d) time</label>
+        </div>
+         <div class="pregunta opcion-multiple">
+            <p>4. ¿Cuál de las siguientes es una librería para pruebas de interfaz en navegador?</p>
+            <label><input type="checkbox" name="q4" value="a"> a) requests</label>
+            <label><input type="checkbox" name="q4" value="b"> b) selenium</label>
+            <label><input type="checkbox" name="q4" value="c"> c) tkinter</label>
+            <label><input type="checkbox" name="q4" value="d"> d) numpy</label>
+        </div>
+         <div class="pregunta opcion-multiple">
+            <p>5. ¿Qué sentencia crea una nueva tabla en SQL?</p>
+            <label><input type="checkbox" name="q5" value="a"> a) CREATE</label>
+            <label><input type="checkbox" name="q5" value="b"> b) ALTER</label>
+            <label><input type="checkbox" name="q5" value="c"> c) INSERT</label>
+            <label><input type="checkbox" name="q5" value="d"> d) DROP</label>
+        </div>
+    </div>
+
+    <div class="parte">
+        <h2>✅ PARTE 6: Verdadero o Falso (10 preguntas)</h2>
+        <p>Escribe V o F según corresponda</p>
+        <div class="pregunta verdadero-falso">
+            <label><input type="text" class="tf-input"> SQL es un lenguaje para gestionar bases de datos.</label>
+            <label><input type="text" class="tf-input"> Una consulta SELECT elimina registros.</label>
+            <label><input type="text" class="tf-input"> Python permite trabajar con clases.</label>
+            <label><input type="text" class="tf-input"> numpy permite manipular imágenes.</label>
+            <label><input type="text" class="tf-input"> Las listas en Python son mutables.</label>
+            <label><input type="text" class="tf-input"> time.sleep() sirve para acelerar un programa.</label>
+            <label><input type="text" class="tf-input"> Las funciones en Python se definen con function.</label>
+            <label><input type="text" class="tf-input"> Las bases de datos relacionales usan tablas.</label>
+            <label><input type="text" class="tf-input"> tkinter sirve para crear interfaces gráficas.</label>
+            <label><input type="text" class="tf-input"> DROP elimina completamente una tabla.</label>
+        </div>
+    </div>
+
+    <div class="parte">
+        <h2>📘 PARTE 7: Teoría General</h2>
+        <div class="pregunta">
+            <p>¿Qué es un diccionario en Python?</p>
+            <textarea class="text-input" placeholder="Tu respuesta aquí..."></textarea>
+        </div>
+         <div class="pregunta">
+            <p>¿Qué es una clase?</p>
+            <textarea class="text-input" placeholder="Tu respuesta aquí..."></textarea>
+        </div>
+         <div class="pregunta">
+            <p>¿Qué es una función?</p>
+            <textarea class="text-input" placeholder="Tu respuesta aquí..."></textarea>
+        </div>
+         <div class="pregunta">
+            <p>Explica qué es POO (Programación Orientada a Objetos).</p>
+            <textarea class="text-input" placeholder="Tu respuesta aquí..."></textarea>
+        </div>
+         <div class="pregunta">
+            <p>¿Qué es una API y para qué sirve?</p>
+            <textarea class="text-input" placeholder="Tu respuesta aquí..."></textarea>
+        </div>
+         <div class="pregunta">
+            <p>¿Qué es una excepción en Python?</p>
+            <textarea class="text-input" placeholder="Tu respuesta aquí..."></textarea>
+        </div>
+    </div>
+    <div class="parte">
+        <h2>📄 PARTE 8: Excel (5 preguntas)</h2>
+         <div class="pregunta">
+            <p>¿Qué fórmula se usa para sumar un rango?</p>
+            <textarea class="text-input" placeholder="Tu respuesta aquí..."></textarea>
+        </div>
+         <div class="pregunta">
+            <p>¿Qué hace =SI(A1>10, "Alto", "Bajo")?</p>
+            <textarea class="text-input" placeholder="Tu respuesta aquí..."></textarea>
+        </div>
+        <div class="pregunta">
+            <p>¿Qué función devuelve el número más alto de un rango?</p>
+            <textarea class="text-input" placeholder="Tu respuesta aquí..."></textarea>
+        </div>
+        <div class="pregunta">
+            <p>¿Qué fórmula se usa para contar celdas no vacías?</p>
+            <textarea class="text-input" placeholder="Tu respuesta aquí..."></textarea>
+        </div>
+        <div class="pregunta">
+            <p>¿Qué diferencia hay entre $A$1 y A1?</p>
+            <textarea class="text-input" placeholder="Tu respuesta aquí..."></textarea>
+        </div>
+    </div>
+
+        <div class="parte" style="text-align: center; background-color: transparent; border: none;">
+            <button type="submit" class="submit-button">Descargar Respuestas</button>
+        </div>
+    </div>
+    <script src="protecciones.js"></script>
+    <script src="cronometro.js"></script>
+    <script src="editor-ejecucion.js"></script>
+    <script src="descargar_pdf.js"></script>
+</body>
+</html>

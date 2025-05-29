@@ -1,0 +1,94 @@
+#top-bar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  color: var(--primary-color);
+  background-color: var(--card-bg);
+  padding: 10px 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  z-index: 1100;
+  border-bottom-left-radius: 8px;
+}
+
+#cronometro {
+  font-size: 1.2em;
+  white-space: nowrap;
+}
+
+#btn-reiniciar {
+  padding: 6px 12px;
+  font-size: 1em;
+  cursor: pointer;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  white-space: nowrap;
+}
+
+#btn-reiniciar:hover {
+  background-color: #0056b3;
+}
+
+
+
+/* Estilos generales (similares a la versión anterior, con ajustes) */
+:root {
+    --bg-color: #f4f4f4; --card-bg: #fff; --text-color: #333;
+    --code-bg: #282a36; /* Dracula bg */ --code-text: #f8f8f2; /* Dracula fg */
+    --border-color: #ddd; --primary-color: #007bff; --error-color: #dc3545;
+    --success-color: #28a745; --output-bg: #e9ecef; --warning-color: #ffc107;
+}
+body { font-family: 'Segoe UI', sans-serif; line-height: 1.6; margin: 0; padding: 10px; background-color: var(--bg-color); color: var(--text-color); }
+.container { max-width: 960px; margin: 20px auto; background-color: var(--card-bg); padding: 15px 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+h1, h2, h3 { color: #333; border-bottom: 2px solid var(--primary-color); padding-bottom: 5px; margin-top: 30px; }
+h1 { text-align: center; border-bottom: none; color: var(--primary-color); }
+.parte { background-color: #fff; padding: 20px; margin-bottom: 25px; border-radius: 8px; border: 1px solid var(--border-color); }
+.pregunta { margin-bottom: 25px; }
+.descripcion { font-style: italic; color: #555; margin-bottom: 15px; background-color: #eef; padding: 15px; border-radius: 4px; border-left: 5px solid var(--primary-color); }
+
+/* CodeMirror y Área de Código */
+.code-editor-area { position: relative; margin-bottom: 10px; border: 1px solid #444; border-radius: 5px; overflow: hidden; }
+.CodeMirror { height: auto; min-height: 180px; font-size: 0.95em; border-radius: 5px; } /* CodeMirror toma el control */
+.CodeMirror-gutters { background: #282a36 !important; border-right: 1px solid #444; }
+.CodeMirror-linenumber { color: #6272a4 !important; }
+
+.run-button {
+    position: absolute; top: 8px; right: 8px; background-color: var(--success-color);
+    color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer;
+    font-size: 0.9em; transition: all 0.2s ease; z-index: 10;
+}
+.run-button:hover { background-color: #218838; transform: scale(1.05); }
+.run-button:disabled { background-color: #aaa; cursor: not-allowed; transform: none; }
+.run-button.running { background-color: var(--warning-color); color: #333; cursor: wait; }
+
+/* Salida */
+.output-box {
+    background-color: var(--output-bg); border: 1px solid var(--border-color); border-radius: 5px;
+    padding: 10px; min-height: 30px; font-family: 'Courier New', monospace; font-size: 0.85em;
+    white-space: pre-wrap; word-wrap: break-word; margin-top: 10px; max-height: 200px;
+    overflow-y: auto; transition: border-color 0.3s ease;
+}
+.output-box.error { color: var(--error-color); border-color: var(--error-color); font-weight: bold; }
+.output-box.loading { color: #555; font-style: italic; }
+.output-box.timeout { color: var(--error-color); border-color: var(--error-color); font-weight: bold; background-color: #f8d7da; }
+
+/* Estado Pyodide/Worker */
+#pyodide-status { text-align: center; padding: 15px; background-color: #fff3cd; color: #856404; border-radius: 5px; margin-bottom: 20px; font-weight: bold; }
+
+/* Otros estilos (tablas, botones, etc.) */
+textarea.text-input { width: calc(100% - 22px); height: 80px; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); font-size: 1em; resize: vertical; margin-bottom: 10px; }
+.opcion-multiple label, .verdadero-falso label { display: block; margin-bottom: 8px; cursor: pointer; }
+table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
+th, td { border: 1px solid var(--border-color); padding: 10px; text-align: left; }
+th { background-color: #f2f2f2; }
+td input[type="text"] { width: 95%; padding: 5px; border: 1px solid var(--border-color); border-radius: 3px; }
+.tf-input { width: 30px; text-align: center; margin-right: 10px; border: 1px solid var(--border-color); padding: 5px; border-radius: 3px; }
+.submit-button { display: block; width: 200px; padding: 15px 20px; background-color: var(--primary-color); color: white; border: none; border-radius: 5px; font-size: 1.1em; cursor: pointer; text-align: center; margin: 40px auto 20px auto; transition: background-color 0.3s ease; }
+.submit-button:hover { background-color: #0056b3; }
