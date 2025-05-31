@@ -15,6 +15,26 @@
   border-bottom-left-radius: 8px;
 }
 
+
+.CodeMirror-hints {
+    font-family: Consolas, monospace;
+    font-size: 14px;
+    border: 1px solid #888686;
+    background: #949393;
+    color: #d4d4d4;
+    z-index: 9999 !important;
+}
+
+.CodeMirror-hint {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.CodeMirror-hint-active {
+    background: #094771;
+    color: white;
+}
+
 #cronometro {
   font-size: 1.2em;
   white-space: nowrap;

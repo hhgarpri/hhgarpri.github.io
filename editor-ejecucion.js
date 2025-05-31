@@ -1,10 +1,12 @@
 const EXECUTION_TIMEOUT = 3000;
-const editors = {};
+// const editors = {}; // Eliminar la variable local 'editors'
 const pyodideStatus = document.getElementById('pyodide-status');
 const runButtons = document.querySelectorAll('.run-button');
 let pyWorker = null;
 let workerReady = false;
 let currentRun = null;
+
+window.codeMirrorEditors = {}; // Inicializar el objeto global para los editores
 
 document.querySelectorAll('textarea[id^="code-"]').forEach(textarea => {
     const editor = CodeMirror.fromTextArea(textarea, {
@@ -18,9 +20,24 @@ document.querySelectorAll('textarea[id^="code-"]').forEach(textarea => {
         matchBrackets: true,
         autoCloseBrackets: true,
         lineWrapping: true,
+        extraKeys: {
+            "Ctrl-Space": "autocomplete"
+        },
+        hintOptions: {
+            completeSingle: false,
+            hint: CodeMirror.hint.anyword
+        }
     });
-    editors[textarea.id] = editor;
+
+    window.codeMirrorEditors[textarea.id] = editor;
+
+    editor.on('inputRead', function(cm, change) {
+        if (!cm.state.completionActive && /[\w.]/.test(change.text[0])) {
+            CodeMirror.commands.autocomplete(cm, null, { completeSingle: false });
+        }
+    });
 });
+
 
 function createWorker() {
     console.log("Creating new Pyodide worker...");
@@ -166,7 +183,12 @@ function runCode(codeId, button) {
         return;
     }
 
-    const editor = editors[codeId];
+    const editor = window.codeMirrorEditors[codeId]; // Acceder al objeto global
+    if (!editor) {
+        console.error(`No se encontró el editor con ID: ${codeId}`);
+        alert(`Error: No se encontró el editor de código.`);
+        return;
+    }
     const code = editor.getValue();
     const outputId = `output-${codeId.split('-')[1]}-${codeId.split('-')[2]}`;
     const outputElement = document.getElementById(outputId);
