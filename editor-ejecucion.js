@@ -8,6 +8,50 @@ let currentRun = null;
 
 window.codeMirrorEditors = {}; // Inicializar el objeto global para los editores
 
+const pythonKeywords = [
+  "for", "while", "if", "else", "elif", "def", "return", "True", "False",
+  "None", "import", "from", "as", "in", "not", "and", "or", "break", "continue",
+  "class", "try", "except", "finally", "with", "pass", "global", "nonlocal",
+  "assert", "lambda", "yield", "raise", "is", "del", "print()", "input()",
+  "str()", "int()", "float()", "bool()", "list()", "dict()", "set()", "tuple()", "len()",
+  "range()", "open()", "close()", "read()", "write()", "replace()", "lower()", "upper()",
+  "append()", "extend()", "pop()", "remove()", "sort()", "reverse()", "split()", "join()"
+];
+
+CodeMirror.registerHelper("hint", "python_combined", function(cm) {
+    const cur = cm.getCursor();
+    const token = cm.getTokenAt(cur);
+    const start = token.start;
+    const end = cur.ch;
+    const word = token.string.slice(0, end - start).toLowerCase();
+
+    // 1. Filtrar palabras clave que empiezan igual
+    const fromKeyword = pythonKeywords.filter(kw => kw.toLowerCase().startsWith(word));
+
+    // 2. Buscar palabras en el documento que empiecen igual (sin repetidos)
+    const regex = /\b\w+\b/g;
+    const wordsInDoc = new Set();
+    cm.eachLine(line => {
+        let lineText = line.text.toLowerCase();
+        let match;
+        while ((match = regex.exec(lineText)) !== null) {
+            if (match[0].startsWith(word)) {
+                wordsInDoc.add(match[0]);
+            }
+        }
+    });
+
+    // 3. Combinar ambas listas y eliminar repetidos
+    const combined = [...new Set([...fromKeyword, ...wordsInDoc])].sort();
+
+    return {
+        list: combined,
+        from: CodeMirror.Pos(cur.line, start),
+        to: CodeMirror.Pos(cur.line, end)
+    };
+});
+
+
 document.querySelectorAll('textarea[id^="code-"]').forEach(textarea => {
     const editor = CodeMirror.fromTextArea(textarea, {
         lineNumbers: true,
@@ -25,7 +69,7 @@ document.querySelectorAll('textarea[id^="code-"]').forEach(textarea => {
         },
         hintOptions: {
             completeSingle: false,
-            hint: CodeMirror.hint.anyword
+            hint: CodeMirror.hint.python_combined
         }
     });
 
